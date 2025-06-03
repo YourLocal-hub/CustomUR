@@ -1,0 +1,22 @@
+local CustomUR = loadstring(game:HttpGet("https://raw.githubusercontent.com/YourLocal-hub/CustomUR/main/CustomUR/init.lua"))()
+local gui = CustomUR.CreateWindow({ Name = "Example UI" })
+
+gui:Button({
+    Text = "Click Me",
+    Callback = function() print("Button clicked!") end
+})
+
+gui:Toggle({
+    Text = "Enable Option",
+    Callback = function(state) print("Toggle state:", state) end
+})
+
+gui:Slider({
+    Min = 0, Max = 100,
+    Callback = function(value) print("Slider:", value) end
+})
+
+gui:Checkbox({
+    Text = "Agree",
+    Callback = function(state) print("Checkbox state:", state) end
+})
