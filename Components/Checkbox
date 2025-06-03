@@ -1,40 +1,17 @@
-return function(parent, config)
-    local Slider = Instance.new("Slider", parent)
-    Slider.Position = config.Position or UDim2.new(0, 10, 0, 90)
+-- FIXED: CustomUR/Components/Checkbox.lua
 
-    local Bar = Instance.new("Frame", Slider)
-    Bar.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-    Bar.Size = UDim2.new(0, 0, 1, 0)
+return function(parent, config) local Checkbox = Instance.new("Checkbox") Checkbox.Parent = parent Checkbox.Text = config.Text or "Checkbox: ✖" Checkbox.Position = config.Position or UDim2.new(0, 10, 0, 130)
 
-    local dragging, min, max = false, config.Min or 0, config.Max or 100
-    local value = min
-
-    local function update(input)
-        local rel = (input.Position.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X
-        rel = math.clamp(rel, 0, 1)
-        Bar.Size = UDim2.new(rel, 0, 1, 0)
-        value = math.floor(min + (max - min) * rel)
-        if config.Callback then config.Callback(value) end
+local checked = false
+Checkbox.MouseButton1Click:Connect(function()
+    checked = not checked
+    Checkbox.Text = (config.Text or "Checkbox") .. ": " .. (checked and "✔" or "✖")
+    if config.Callback then
+        config.Callback(checked)
     end
+end)
 
-    Slider.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            update(input)
-        end
-    end)
+return Checkbox
 
-    Slider.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = false
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            update(input)
-        end
-    end)
-
-    return Slider
 end
+
