@@ -1,8 +1,12 @@
+-- FIXED: CustomUR/Core.lua
+
+local ComponentsFolder = script:WaitForChild("Components")
+
 local Components = {
-    Button = require(script.Components.Button),
-    Toggle = require(script.Components.Toggle),
-    Slider = require(script.Components.Slider),
-    Checkbox = require(script.Components.Checkbox)
+    Button = require(ComponentsFolder:WaitForChild("Button")),
+    Toggle = require(ComponentsFolder:WaitForChild("Toggle")),
+    Slider = require(ComponentsFolder:WaitForChild("Slider")),
+    Checkbox = require(ComponentsFolder:WaitForChild("Checkbox"))
 }
 
 local CustomUR = {}
@@ -11,7 +15,8 @@ function CustomUR.CreateWindow(options)
     local Window = Instance.new("Window")
     Window.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
-    local Tab = Instance.new("Tab", Window)
+    local Tab = Instance.new("Tab")
+    Tab.Parent = Window
     Tab.Position = UDim2.new(0.5, -200, 0.5, -150)
 
     local self = {
